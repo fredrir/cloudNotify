@@ -18,6 +18,7 @@ def daily_event_checker(event, context):
     
     for event in data_json['results']:
         if event['attendance_event'] is not None:
+            event_type = event['event_type']  
             registration_start_str = event['attendance_event']['registration_start']
             title = event['title']
             registration_start = datetime.strptime(registration_start_str, "%Y-%m-%dT%H:%M:%S%z")
@@ -25,16 +26,17 @@ def daily_event_checker(event, context):
             
             now = datetime.now(pytz.timezone(registration_start.tzinfo.zone))
             if now <= registration_start and now >= notification_time - timedelta(days=1):
-                send_fcm_notification(title, registration_start_str)
+                send_fcm_notification(title, registration_start_str, event_type)  
 
-def send_fcm_notification(title, registration_start_str):
+def send_fcm_notification(title, registration_start_str, event_type):
     registration_start = datetime.strptime(registration_start_str, "%Y-%m-%dT%H:%M:%S%z")
+    topic = str(event_type)  
     message = messaging.Message(
         notification=messaging.Notification(
             title='Påmelding starter snart!',
             body=f'Påmelding til {title} starter om 15 minutter.'
         ),
-        topic='allUsers'
+        topic=topic  
     )
 
     try:
@@ -42,6 +44,7 @@ def send_fcm_notification(title, registration_start_str):
         print(f'Successfully sent message: {response}')
     except Exception as e:
         print(f'Error sending message: {e}')
+
 
 def send_test_notification(request):
     message = messaging.Message(

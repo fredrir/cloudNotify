@@ -31,6 +31,9 @@ def daily_event_checker(event, context):
 def send_fcm_notification(title, registration_start_str, event_type):
     registration_start = datetime.strptime(registration_start_str, "%Y-%m-%dT%H:%M:%S%z")
     topic = str(event_type)  
+    if topic != '3' or topic !='2' or topic != '1':
+        topic = '4'
+        
     message = messaging.Message(
         notification=messaging.Notification(
             title='Påmelding starter snart!',

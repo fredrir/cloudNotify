@@ -31,8 +31,8 @@ def send_fcm_notification(title, registration_start_str):
     registration_start = datetime.strptime(registration_start_str, "%Y-%m-%dT%H:%M:%S%z")
     message = messaging.Message(
         notification=messaging.Notification(
-            title='Event Registration Reminder',
-            body=f'Registration for {title} starts in 15 minutes.'
+            title='Påmelding starter snart!',
+            body=f'Påmelding til {title} starter om 15 minutter.'
         ),
         topic='eventRegistrations'
     )

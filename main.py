@@ -34,6 +34,7 @@ def send_fcm_notification(title, registration_start_str):
             title='Påmelding starter snart!',
             body=f'Påmelding til {title} starter om 15 minutter.'
         ),
+        topic='allUsers'
     )
 
     try:
@@ -42,3 +43,17 @@ def send_fcm_notification(title, registration_start_str):
     except Exception as e:
         print(f'Error sending message: {e}')
 
+def send_test_notification(request):
+    message = messaging.Message(
+        notification=messaging.Notification(
+            title='Test',
+            body='Test notifikasjon'
+        ),
+        topic='allUsers'
+    )
+
+    try:
+        response = messaging.send(message)
+        return f'Successfully sent message: {response}'
+    except Exception as e:
+        return f'Error sending message: {e}'

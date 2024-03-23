@@ -34,7 +34,6 @@ def send_fcm_notification(title, registration_start_str):
             title='Påmelding starter snart!',
             body=f'Påmelding til {title} starter om 15 minutter.'
         ),
-        topic='eventRegistrations'
     )
 
     try:

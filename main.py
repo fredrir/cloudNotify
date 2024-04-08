@@ -6,6 +6,7 @@ from urllib.request import urlopen
 import json
 from flask import jsonify
 
+# Cloud function for sending out automatic notifications for Online the App
 try:
     firebase_admin.get_app()
 except ValueError as e:
